@@ -13,6 +13,8 @@ export default async function AdminOrders() {
     ...order,
     deliveryTime: order.deliveryTime || "",
     comment: order.comment || "",
+    createdAt: order.createdAt.toISOString(),
+    updatedAt: order.updatedAt.toISOString(),
   }));
 
   return (
