@@ -3,26 +3,16 @@ import { prisma } from "@/lib/prisma";
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await context.params;
     const body = await req.json();
 
-    const status = body.status;
-
-    if (!status) {
-      return NextResponse.json(
-        { ok: false, error: "Status is required" },
-        { status: 400 }
-      );
-    }
-
     const order = await prisma.order.update({
-      where: {
-        id: params.id,
-      },
+      where: { id },
       data: {
-        status,
+        status: body.status,
       },
     });
 
@@ -34,10 +24,7 @@ export async function PATCH(
     console.error("ORDER_STATUS_UPDATE_ERROR:", error);
 
     return NextResponse.json(
-      {
-        ok: false,
-        error: "Order status was not updated",
-      },
+      { ok: false, error: "Order status was not updated" },
       { status: 400 }
     );
   }
