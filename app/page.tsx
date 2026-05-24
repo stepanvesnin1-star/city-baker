@@ -169,7 +169,7 @@ export default function Home() {
 
           <div className="grid lg:grid-cols-3 gap-6">
             {posts.map((post, i) => (
-              <Reveal key={`${post.slug}-${i}`} delay={i * 0.08}>
+              <Reveal key={`${post.title}-${i}`} delay={i * 0.08}>
                 <article className="card overflow-hidden group">
                   <div className="aspect-[4/3] bg-neutral-200 flex items-center justify-center text-neutral-500">
                     Фото статьи
@@ -189,7 +189,7 @@ export default function Home() {
                     </p>
 
                     <Link
-                      href={`/blog/${post.slug}`}
+                      href="/blog"
                       className="inline-flex items-center gap-2 mt-6 text-orange font-bold"
                     >
                       Читать <ArrowRight size={16} />
