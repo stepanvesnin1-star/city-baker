@@ -130,7 +130,7 @@ export default function Home() {
                     <div className="flex justify-between items-start gap-4">
                       <div>
                         <p className="text-sm uppercase tracking-wider text-muted">
-                          {p.category}
+                          {p.category || p.cat || "Без категории"}
                         </p>
 
                         <h3 className="text-2xl font-black mt-2">{p.name}</h3>
