@@ -157,9 +157,7 @@ export default function AdminProductsClient({
                     </div>
                   </td>
 
-                  <td>{typeof product.category === "object"
-    ? product.category?.name
-    : product.category || product.categoryId || "Без категории"}</td>
+                  <td>{String(product.category || product.categoryId || "Без категории")}</td>
 
                   <td>{product.price} ₽</td>
 
