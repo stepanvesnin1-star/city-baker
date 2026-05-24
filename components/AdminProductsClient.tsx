@@ -226,14 +226,10 @@ export default function AdminProductsClient({
           required
         />
 
-        <select
-          className="input"
-          name="category"
-          defaultValue={
-  typeof editing?.category === "object"
-    ? editing.category?.name
-    : editing?.category || categories[0]?.name
-}
+<select
+  className="input"
+  name="category"
+  defaultValue={editing?.category || categories[0]?.name || "Без категории"}
         >
           {categories.map((category) => (
             <option value={category.name} key={category.id}>
