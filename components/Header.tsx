@@ -1,0 +1,5 @@
+import Link from 'next/link';
+import { ShoppingBag } from 'lucide-react';
+import { MobileNav } from './MobileNav';
+const nav=[['/menu','Меню'],['/about','О нас'],['/locations','Где купить'],['/blog','Блог'],['/contacts','Контакты']];
+export function Header(){return <header className="sticky top-0 z-50 bg-cream/88 backdrop-blur-xl border-b border-black/5"><div className="container h-[76px] flex items-center justify-between"><Link href="/" className="font-black tracking-wide text-lg"><span className="bg-orange text-white rounded-xl px-2 py-1 mr-2">⌁</span>СИТИ БЕЙКЕР</Link><nav className="hidden lg:flex gap-7 text-xs uppercase tracking-[.22em] font-bold">{nav.map(([href,label])=><Link key={href} href={href} className="hover:text-orange transition-colors">{label}</Link>)}</nav><div className="hidden lg:flex gap-3"><Link href="/admin" className="btn bg-black/5 py-2 px-5 text-sm">Админка</Link><Link href="/order" className="btn btn-primary py-2 px-5 text-sm"><ShoppingBag size={16}/>Заказать</Link></div><MobileNav/></div></header>}
