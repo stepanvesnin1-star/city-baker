@@ -9,9 +9,15 @@ export default async function AdminOrders() {
     },
   });
 
+  const normalizedOrders = orders.map((order) => ({
+    ...order,
+    deliveryTime: order.deliveryTime || "",
+    comment: order.comment || "",
+  }));
+
   return (
     <AdminShell title="Заказы">
-      <AdminOrdersClient initialOrders={orders} />
+      <AdminOrdersClient initialOrders={normalizedOrders} />
     </AdminShell>
   );
 }
