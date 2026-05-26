@@ -2,6 +2,8 @@ import Link from 'next/link';
 import AdminShell from '@/components/AdminShell';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminHome(){
   let stats = { products:0, orders:0, locations:0, posts:0 };
   try { stats = { products: await prisma.product.count(), orders: await prisma.order.count(), locations: await prisma.location.count(), posts: await prisma.blogPost.count() }; } catch {}

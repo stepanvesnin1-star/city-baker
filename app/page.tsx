@@ -1,10 +1,20 @@
 import Link from "next/link";
 import { ArrowRight, Clock, MapPin, Sparkles } from "lucide-react";
 
-import { products, stats, posts } from "@/lib/data";
+import { prisma } from "@/lib/prisma";
+import { stats } from "@/lib/data";
 import { Reveal } from "@/components/Reveal";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const products = await prisma.product.findMany({
+    take: 6,
+  });
+
+  const posts = await prisma.blogPost.findMany({
+    take: 3,
+  });
   return (
     <main>
       <section className="city-bg min-h-[820px] text-white flex items-center relative overflow-hidden">
@@ -15,7 +25,7 @@ export default function Home() {
 
         <div className="container text-center relative z-10">
           <Reveal>
-            <p className="eyebrow">Москва — свежая выпечка с 6:00</p>
+            <p className="eyebrow">Барнаул — свежая выпечка с 6:00</p>
 
             <h1 className="text-[56px] md:text-[112px] leading-[.86] font-black mt-6 tracking-[-0.08em]">
               СВЕЖАЯ
@@ -130,7 +140,7 @@ export default function Home() {
                     <div className="flex justify-between items-start gap-4">
                       <div>
                         <p className="text-sm uppercase tracking-wider text-muted">
-                          {p.cat || "Без категории"}
+                          {p.category || "Без категории"}
                         </p>
 
                         <h3 className="text-2xl font-black mt-2">{p.name}</h3>

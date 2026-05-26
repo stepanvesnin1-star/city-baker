@@ -2,6 +2,8 @@ import AdminShell from "@/components/AdminShell";
 import AdminProductsClient from "@/components/AdminProductsClient";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminProducts() {
   const products = await prisma.product.findMany({
     orderBy: {

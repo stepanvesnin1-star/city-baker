@@ -2,6 +2,8 @@ import AdminShell from "@/components/AdminShell";
 import AdminSimpleCrudClient from "@/components/AdminSimpleCrudClient";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminCategories() {
   const items = await prisma.category.findMany({
     orderBy: {

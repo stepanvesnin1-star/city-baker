@@ -1,12 +1,10 @@
 import { MenuClient } from "@/components/MenuClient";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function Menu() {
-  const products = await prisma.product.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const products = await prisma.product.findMany();
 
   return (
     <main>
