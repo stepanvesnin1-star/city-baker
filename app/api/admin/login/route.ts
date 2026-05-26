@@ -3,31 +3,23 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const form = await req.formData();
 
-  const email = String(form.get("email") || "");
+  const login = String(form.get("login") || "");
   const password = String(form.get("password") || "");
 
-  const adminEmail =
-    process.env.ADMIN_EMAIL || "admin@citybaker.ru";
+  if (
+    login === process.env.ADMIN_LOGIN &&
+    password === process.env.ADMIN_PASSWORD
+  ) {
+    const res = NextResponse.redirect(new URL("/admin", req.url));
 
-  const adminPassword =
-    process.env.ADMIN_PASSWORD || "123456";
+    res.cookies.set("admin", "true", {
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 60 * 24,
+    });
 
-  if (email !== adminEmail || password !== adminPassword) {
-    return NextResponse.redirect(
-      new URL("/admin/login?error=1", req.url)
-    );
+    return res;
   }
 
-  const response = NextResponse.redirect(
-    new URL("/admin", req.url)
-  );
-
-response.cookies.set("city_baker_admin", "authorized", {
-  httpOnly: true,
-  sameSite: "lax",
-  path: "/",
-  maxAge: 60 * 60 * 24 * 7,
-});
-
-  return response;
+  return NextResponse.redirect(new URL("/admin/login?error=1", req.url));
 }

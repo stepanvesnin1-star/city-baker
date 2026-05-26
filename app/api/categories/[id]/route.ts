@@ -1,5 +1,51 @@
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { requireAdmin } from '@/lib/adminAuth';
-export async function PATCH(req:Request,{params}:{params:Promise<{id:string}>}){try{await requireAdmin();const {id}=await params;const b=await req.json();if(b.sort!==undefined)b.sort=Number(b.sort||0);return NextResponse.json({ok:true,data:await prisma.category.update({where:{id},data:b})});}catch{return NextResponse.json({ok:false},{status:400});}}
-export async function DELETE(_req:Request,{params}:{params:Promise<{id:string}>}){try{await requireAdmin();const {id}=await params;await prisma.category.delete({where:{id}});return NextResponse.json({ok:true});}catch{return NextResponse.json({ok:false},{status:400});}}
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+
+export async function DELETE(
+  req: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await context.params;
+
+    await prisma.category.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({ ok: true });
+  } catch (error) {
+    console.error("CATEGORY_DELETE_ERROR:", error);
+
+    return NextResponse.json(
+      { error: "Не удалось удалить категорию" },
+      { status: 400 }
+    );
+  }
+}
+
+export async function PATCH(
+  req: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await context.params;
+    const body = await req.json();
+
+    const category = await prisma.category.update({
+      where: { id },
+      data: {
+        name: String(body.name || ""),
+        slug: String(body.slug || ""),
+      },
+    });
+
+    return NextResponse.json(category);
+  } catch (error) {
+    console.error("CATEGORY_UPDATE_ERROR:", error);
+
+    return NextResponse.json(
+      { error: "Не удалось изменить категорию" },
+      { status: 400 }
+    );
+  }
+}
