@@ -105,11 +105,13 @@ export default async function Home() {
             </Reveal>
 
             <Reveal delay={0.1}>
-              <div className="card overflow-hidden">
-                <div className="aspect-[4/3] bg-neutral-200 flex items-center justify-center text-neutral-500 text-xl">
-                  Фото пекарни
-                </div>
-              </div>
+<div className="card overflow-hidden">
+  <img
+    src="/about-bakery.jpg"
+    alt="Фото пекарни"
+    className="w-full aspect-[4/3] object-cover"
+  />
+</div>
             </Reveal>
           </div>
         </div>
@@ -132,9 +134,19 @@ export default async function Home() {
             {products.slice(0, 6).map((p, i) => (
               <Reveal key={p.id} delay={i * 0.06}>
                 <div className="card overflow-hidden group">
-                  <div className="aspect-square bg-neutral-200 flex items-center justify-center text-neutral-500">
-                    Фото товара
-                  </div>
+                  <div className="aspect-square bg-neutral-200 overflow-hidden">
+  {p.image ? (
+    <img
+      src={p.image}
+      alt={p.name}
+      className="w-full h-full object-cover"
+    />
+  ) : (
+    <div className="w-full h-full flex items-center justify-center text-neutral-500">
+      Фото товара
+    </div>
+  )}
+</div>
 
                   <div className="p-6">
                     <div className="flex justify-between items-start gap-4">
